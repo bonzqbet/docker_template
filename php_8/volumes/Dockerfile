@@ -1,20 +1,27 @@
 FROM php:8.2.4-apache
+
 # mysqli
 RUN docker-php-ext-install mysqli
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-## Curl Libary install for Curl php
-RUN apt-get update -y && apt-get install -y  libcurl3-dev
+# update apt
+RUN apt-get update -y
+
+# Curl Libary install for Curl php
+RUN apt-get install -y  libcurl3-dev
+
+# install some base extensions
+RUN apt-get install -y libzip-dev zip && docker-php-ext-install zip
 
 # GD Libary install for upload image
-RUN apt-get update -y && apt-get install -y  libpng-dev 
-RUN apt-get update -y && apt-get install -y  libjpeg62-turbo-dev
-RUN apt-get update -y && apt-get install -y  libfreetype6-dev
-RUN apt-get update -y && apt-get install -y  libmcrypt-dev
-RUN apt-get update && apt-get install -y \
-        zlib1g-dev
+RUN apt-get install -y  libpng-dev 
+RUN apt-get install -y  libjpeg62-turbo-dev
+RUN apt-get install -y  libfreetype6-dev
+RUN apt-get install -y  libmcrypt-dev
+RUN apt-get install -y  zlib1g-dev
+
 # configure gd for other type (jpeg, jpg)
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install -j $(nproc) gd
