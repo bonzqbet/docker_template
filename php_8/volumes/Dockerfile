@@ -12,6 +12,12 @@ RUN apt-get update -y
 # Curl Libary install for Curl php
 RUN apt-get install -y  libcurl3-dev
 
+# install sudo
+RUN apt-get install -y  sudo
+
+# install nano
+RUN apt-get install -y  nano
+
 # install some base extensions
 RUN apt-get install -y libzip-dev zip && docker-php-ext-install zip
 
