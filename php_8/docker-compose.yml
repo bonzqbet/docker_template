@@ -11,6 +11,8 @@ services:
       - ./volumes/src:/var/www/html/
     ports:
       - 8080:80
+    networks:
+      env_developer : {}
   # db:
   #   container_name: db_php8
   #   image: mysql
@@ -22,6 +24,8 @@ services:
   #     # MYSQL_PASSWORD: MYSQL_PASSWORD
   #   ports:
   #     - "9906:3306"
+  #   networks:
+  #     env_developer : {}
   # phpmyadmin:
   #   image: phpmyadmin/phpmyadmin
   #   ports:
@@ -29,6 +33,12 @@ services:
   #   restart: always
   #   environment:
   #     PMA_HOST: db
+  #   networks:
+  #     env_developer : {}
   #   depends_on:
   #     - db
+
+networks:
+  env_developer:
+    external: true
       

@@ -9,6 +9,9 @@ RUN a2enmod rewrite
 # update apt
 RUN apt-get update -y
 
+# update ping
+RUN apt-get install -y iputils-ping
+
 # Curl Libary install for Curl php
 RUN apt-get install -y  libcurl3-dev
 

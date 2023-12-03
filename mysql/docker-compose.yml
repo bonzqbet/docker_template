@@ -4,13 +4,17 @@ services:
     container_name: db_mysql
     image: mysql
     restart: always
+    command: mysqld --sql_mode="NO_ENGINE_SUBSTITUTION"
     environment:
-      MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
-      # MYSQL_DATABASE: MYSQL_DATABASE
-      # MYSQL_USER: MYSQL_USER
-      # MYSQL_PASSWORD: MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD= MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE= MYSQL_DATABASE
+      - MYSQL_USER= MYSQL_USER
+      - MYSQL_PASSWORD= MYSQL_PASSWORD
+      - TZ=Asia/Bangkok
     ports:
       - "9906:3306"
+    networks:
+      env_developer: {}
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
@@ -18,6 +22,11 @@ services:
     restart: always
     environment:
       PMA_HOST: db
+    networks:
+      env_developer: {}
     depends_on:
       - db
-      
+
+networks:
+  env_developer:
+    external: true
