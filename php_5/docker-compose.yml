@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   php-apache-environment:
-    container_name: php8-apache
+    container_name: php5-apache
     build: 
       context: ./volumes
       dockerfile: Dockerfile
@@ -10,13 +10,13 @@ services:
     volumes:
       - ./volumes/src:/var/www/html/
     ports:
-      - 8080:80
+      - 5050:80
     environment:
       TZ: "Asia/Bangkok"
     networks:
       env_developer : {}
   # db:
-  #   container_name: db_php8
+  #   container_name: db_php7
   #   image: mysql
   #   restart: always
   #   environment:
@@ -43,4 +43,3 @@ services:
 networks:
   env_developer:
     external: true
-      

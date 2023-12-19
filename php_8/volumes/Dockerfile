@@ -3,6 +3,9 @@ FROM php:8.2.4-apache
 # mysqli
 RUN docker-php-ext-install mysqli
 
+# pdo
+RUN docker-php-ext-install pdo pdo_mysql
+
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
