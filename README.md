@@ -1,6 +1,6 @@
 # Docker
 **Command**
-- docker network create env_developer (credate network)
+- docker network create env_developer (create network)
 - docker compose build (load build form Dockerfile)
 - docker compose down (remove container)
 - docker compose up (run container)
