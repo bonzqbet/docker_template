@@ -5,7 +5,7 @@ RUN a2enmod rewrite
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable mysqli
 
-RUN docker-php-ext-install mysql
+RUN docker-php-ext-install mysql 
 
 # # update apt
 # RUN apt-get update -y

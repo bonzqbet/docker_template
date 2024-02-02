@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  db:
+    container_name: mariadb
+    image: mariadb
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=MYSQL_ROOT_PASSWORD
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=p@ss
+      - TZ=Asia/Bangkok
+    ports:
+      - "9906:3306"
+    command: --sql_mode="NO_ENGINE_SUBSTITUTION"
+    networks:
+      env_developer: {}
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8000:80"
+    restart: always
+    environment:
+      PMA_HOST: db
+    networks:
+      env_developer: {}
+    depends_on:
+      - db
+
+networks:
+  env_developer:
+    external: true

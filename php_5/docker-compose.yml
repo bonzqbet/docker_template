@@ -15,30 +15,6 @@ services:
       TZ: "Asia/Bangkok"
     networks:
       env_developer : {}
-  # db:
-  #   container_name: db_php7
-  #   image: mysql
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
-  #     # MYSQL_DATABASE: MYSQL_DATABASE
-  #     # MYSQL_USER: MYSQL_USER
-  #     # MYSQL_PASSWORD: MYSQL_PASSWORD
-  #   ports:
-  #     - "9906:3306"
-  #   networks:
-  #     env_developer : {}
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   ports:
-  #     - "8000:80"
-  #   restart: always
-  #   environment:
-  #     PMA_HOST: db
-  #   networks:
-  #     env_developer : {}
-  #   depends_on:
-  #     - db
 
 networks:
   env_developer:
