@@ -1,0 +1,9 @@
+docker run --rm --name sonarqube -e --SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
+----------
+docker run --network=host --rm -v "${PWD}:/usr/src" sonarsource/sonar-scanner-cli \
+  sonar-scanner \
+  -Dsonar.projectKey=secure-code \
+  -Dsonar.sources=. \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.token=sqp_7219323458f68fa4ccc25fe383d9f97d4131acbd \
+  -X

@@ -1,18 +1,21 @@
 version: '3.8'
+
 services:
   postgres:
     container_name: postgres
-    image: postgres
-    # restart: always
+    image: postgres:latest
+    restart: always
     environment:
       POSTGRES_USER: postgresadmin
       POSTGRES_PASSWORD: postgresp@ss
     ports:
-      - "5432:5432"
+      - "9432:5432"
+    networks:
+      - env_developer
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    networks:
-      env_developer: {}
+      - ./config/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+      - ./config/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
 
 volumes:
   postgres-data:

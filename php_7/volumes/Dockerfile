@@ -1,44 +1,31 @@
 FROM php:7.4.0-apache
 
-# mysqli
-RUN docker-php-ext-install mysqli
+# Install necessary extensions and libraries
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    iputils-ping \
+    libcurl3-dev \
+    sudo \
+    nano \
+    libzip-dev \
+    zip \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    libmcrypt-dev \
+    zlib1g-dev \
+    libwebp-dev \
+    libpq-dev
 
-# pdo
-RUN docker-php-ext-install pdo pdo_mysql
+# Install PHP extensions
+RUN docker-php-ext-install mysqli pdo pdo_mysql pdo_pgsql
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp
+RUN docker-php-ext-install -j $(nproc) gd
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# update apt && apache2
-RUN apt-get update && apt-get install apache2 -y
-
-# update ping
-RUN apt-get install -y iputils-ping
-
-# Curl Libary install for Curl php
-RUN apt-get install -y  libcurl3-dev
-
-# install sudo
-RUN apt-get install -y  sudo
-
-# install nano
-RUN apt-get install -y  nano
-
-# install some base extensions
-RUN apt-get install -y libzip-dev zip && docker-php-ext-install zip
-
-# GD Libary install for upload image
-RUN apt-get install -y  libpng-dev 
-RUN apt-get install -y  libjpeg62-turbo-dev
-RUN apt-get install -y  libfreetype6-dev
-RUN apt-get install -y  libmcrypt-dev
-RUN apt-get install -y  zlib1g-dev
-
-# configure gd for other type (jpeg, jpg)
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install -j $(nproc) gd
-
-# php.ini:
+# Configure php.ini
 RUN echo 'opcache.file_update_protection=0\n\
 opcache.memory_consumption=256\n\
 opcache.max_accelerated_files=24000\n\
@@ -49,4 +36,11 @@ upload_max_filesize=512M\n\
 max_input_vars=10000\n\
 max_execution_time=30000\n\
 short_open_tag=On\n\
+memory_limit=512M\n\
 post_max_size=512M\n' > /usr/local/etc/php/php.ini
+
+# Cleanup
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Set permissions (if necessary)
+RUN chown -R www-data:www-data /var/www/html

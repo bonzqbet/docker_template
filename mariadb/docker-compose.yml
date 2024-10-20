@@ -12,6 +12,8 @@ services:
     ports:
       - "9906:3306"
     command: --sql_mode="NO_ENGINE_SUBSTITUTION"
+    volumes:
+      - ./db_data:/var/lib/mysql
     networks:
       env_developer: {}
   phpmyadmin:
@@ -26,6 +28,10 @@ services:
       env_developer: {}
     depends_on:
       - db
+
+volumes:
+  db_data:
+    driver: local
 
 networks:
   env_developer:

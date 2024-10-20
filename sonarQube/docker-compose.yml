@@ -1,0 +1,23 @@
+version: "3"
+services:
+  sonarqube:
+    image: sonarqube:latest
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://postgres:5432/sonarqube
+      - SONAR_JDBC_USERNAME=postgresadmin
+      - SONAR_JDBC_PASSWORD=postgresp@ss
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+      - SONAR_ES_JAVA_OPTS=-Xms1g -Xmx1g # reduce memory usage
+    networks:
+      - env_developer
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    mem_limit: 4g
+
+networks:
+  env_developer:
+    external: true
