@@ -2,7 +2,7 @@ version: '3.8'
 services:
   db:
     container_name: mariadb
-    image: mariadb
+    image: mariadb:latest
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=MYSQL_ROOT_PASSWORD
@@ -13,7 +13,8 @@ services:
       - "9906:3306"
     command: --sql_mode="NO_ENGINE_SUBSTITUTION"
     volumes:
-      - ./db_data:/var/lib/mysql
+      - ./db_data:/var/lib/mysql:rw  # Ensure the volume is mounted as read-write
+    user: "999:999"  # Ensure the user matches the mysql user inside the container (UID:999, GID:999)
     networks:
       env_developer: {}
   phpmyadmin:
