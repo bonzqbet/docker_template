@@ -1,12 +1,10 @@
 version: '3.8'
 services:
-  php-apache-environment:
-    container_name: php8-apache
+  php8:
+    container_name: php8
     build: 
       context: ./volumes
       dockerfile: Dockerfile
-    # depends_on:
-    #   - db
     volumes:
       - ./volumes/src:/var/www/html/
     ports:
@@ -15,8 +13,8 @@ services:
       TZ: "Asia/Bangkok"
     networks:
       env_developer : {}
-  
 networks:
   env_developer:
     external: true
+    driver: bridge
       

@@ -1,31 +1,20 @@
 version: '3.8'
 services:
-  db:
-    container_name: db_mysql
-    image: mysql
+  mysql:
+    container_name: mysql
+    image: mysql:latest
     restart: always
-    command: mysqld --sql_mode="NO_ENGINE_SUBSTITUTION"
     environment:
       - MYSQL_ROOT_PASSWORD=MYSQL_ROOT_PASSWORD
-      - MYSQL_DATABASE=MYSQL_DATABASE
-      - MYSQL_USER=MYSQL_USER
-      - MYSQL_PASSWORD=MYSQL_PASSWORD
       - TZ=Asia/Bangkok
     ports:
-      - "9906:3306"
+      - "9966:3306"
+    command: --sql_mode="NO_ENGINE_SUBSTITUTION"
+    volumes:
+      - ./db_data:/var/lib/mysql:rw  # Ensure the volume is mounted as read-write
+    user: "999:999"  # Ensure the user matches the mysql user inside the container (UID:999, GID:999)
     networks:
       env_developer: {}
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "8000:80"
-    restart: always
-    environment:
-      PMA_HOST: db
-    networks:
-      env_developer: {}
-    depends_on:
-      - db
 
 networks:
   env_developer:

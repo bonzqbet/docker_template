@@ -1,12 +1,11 @@
 version: '3.8'
 services:
-  php-apache-environment:
-    container_name: php5-apache
-    build: 
-      context: ./volumes
-      dockerfile: Dockerfile
-    # depends_on:
-    #   - db
+  php5:
+    image: porchn/php5.6-apache
+    container_name: php5
+    # build: 
+    #   context: ./volumes
+    #   dockerfile: Dockerfile
     volumes:
       - ./volumes/src:/var/www/html/
     ports:
@@ -19,3 +18,5 @@ services:
 networks:
   env_developer:
     external: true
+
+#https://hub.docker.com/r/porchn/php5.6-apache/

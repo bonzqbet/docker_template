@@ -1,9 +1,10 @@
 version: '3.8'
+
 services:
   db:
     container_name: mariadb
     image: mariadb:latest
-    restart: always
+    # restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=MYSQL_ROOT_PASSWORD
       - MYSQL_USER=admin
@@ -17,22 +18,10 @@ services:
     user: "999:999"  # Ensure the user matches the mysql user inside the container (UID:999, GID:999)
     networks:
       env_developer: {}
-  phpmyadmin:
-    container_name: phpmyadmin
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "8000:80"
-    restart: always
-    environment:
-      PMA_HOST: db
-    networks:
-      env_developer: {}
-    depends_on:
-      - db
-
-volumes:
-  db_data:
-    driver: local
+      
+# volumes:
+#   db_data:
+#     driver: local
 
 networks:
   env_developer:
