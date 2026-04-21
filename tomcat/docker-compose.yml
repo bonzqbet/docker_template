@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  tomcat:
+    build: .
+    container_name: tomcat-dev
+    expose:
+      - "8080"
+    volumes:
+      - ./tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+      - ./logs:/usr/local/tomcat/logs
+    restart: unless-stopped
+    networks:
+      - docker_network
+
+networks:
+  docker_network:
+    external: true

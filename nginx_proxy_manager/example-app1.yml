@@ -1,0 +1,18 @@
+services:
+  example_app:
+    image: node:18
+    container_name: example_app
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    expose:
+      - "8082"
+    command: ["npm", "start"]
+
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

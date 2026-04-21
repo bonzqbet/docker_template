@@ -1,9 +1,8 @@
-version: '3.8'
 services:
   mysql:
     container_name: mysql
     image: mysql:latest
-    restart: always
+    # restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=MYSQL_ROOT_PASSWORD
       - TZ=Asia/Bangkok
@@ -15,7 +14,7 @@ services:
     user: "999:999"  # Ensure the user matches the mysql user inside the container (UID:999, GID:999)
     networks:
       env_developer: {}
-
+      
 networks:
   env_developer:
     external: true

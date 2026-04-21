@@ -1,10 +1,10 @@
 FROM php:8.3.6-apache
 
-# Install necessary extensions and libraries
+# Install libraries
 RUN apt-get update && apt-get install -y \
     apache2 \
     iputils-ping \
-    libcurl3-dev \
+    libcurl4-openssl-dev \
     sudo \
     nano \
     libzip-dev \
@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
-    libmcrypt-dev \
     zlib1g-dev \
     libwebp-dev \
     libpq-dev
@@ -26,7 +25,7 @@ RUN docker-php-ext-install -j $(nproc) gd
 RUN a2enmod rewrite
 
 # Configure php.ini
-RUN echo 'opcache.file_update_protection=0\n\
+RUN printf "opcache.file_update_protection=0\n\
 opcache.memory_consumption=256\n\
 opcache.max_accelerated_files=24000\n\
 opcache.max_wasted_percentage=10\n\
@@ -37,10 +36,10 @@ max_input_vars=10000\n\
 max_execution_time=30000\n\
 short_open_tag=On\n\
 memory_limit=512M\n\
-post_max_size=512M\n' > /usr/local/etc/php/php.ini
+post_max_size=512M\n" > /usr/local/etc/php/php.ini
 
 # Cleanup
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Set permissions (if necessary)
+# Permissions
 RUN chown -R www-data:www-data /var/www/html
